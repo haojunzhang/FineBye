@@ -1,0 +1,66 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:2177756935938858980",
+      "lastPropertyId": "10:165569842742135653",
+      "name": "Cam",
+      "properties": [
+        {
+          "id": "1:799605696159428865",
+          "name": "Id"
+        },
+        {
+          "id": "2:5313204844311631669",
+          "name": "CityName"
+        },
+        {
+          "id": "3:809109028839244986",
+          "name": "RegionName"
+        },
+        {
+          "id": "4:557146339040168005",
+          "name": "Address"
+        },
+        {
+          "id": "5:4351138371915239471",
+          "name": "DeptNm"
+        },
+        {
+          "id": "6:5800105206766300845",
+          "name": "BranchNm"
+        },
+        {
+          "id": "7:4404226677746717616",
+          "name": "Longitude"
+        },
+        {
+          "id": "8:8104277548868400055",
+          "name": "Latitude"
+        },
+        {
+          "id": "9:621459678202359191",
+          "name": "direct"
+        },
+        {
+          "id": "10:165569842742135653",
+          "name": "limit"
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "1:2177756935938858980",
+  "lastIndexId": "0:0",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 4,
+  "modelVersionParserMinimum": 4,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}

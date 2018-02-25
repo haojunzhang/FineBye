@@ -4,9 +4,11 @@ public interface WelcomeContract {
 
     interface View {
 
+        void openMainActivity();
     }
 
     interface Presenter {
 
+        void displayWelcome();
     }
 }

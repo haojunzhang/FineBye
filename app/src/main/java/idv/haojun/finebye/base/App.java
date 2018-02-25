@@ -6,9 +6,14 @@ import android.app.Application;
 import java.util.HashSet;
 import java.util.Set;
 
+import idv.haojun.finebye.data.MyObjectBox;
+import io.objectbox.BoxStore;
+import io.objectbox.BoxStoreBuilder;
+
 public class App extends Application {
     private static App instance;
     private Set<Activity> activities;
+    private BoxStore boxStore;
 
     public static App getInstance() {
         return instance;
@@ -18,6 +23,11 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        boxStore = MyObjectBox.builder().androidContext(App.this).build();
+    }
+
+    public BoxStore getBoxStore(){
+        return boxStore;
     }
 
     public void registerActivity(Activity activity) {
@@ -32,7 +42,7 @@ public class App extends Application {
             activities.remove(activity);
     }
 
-    public void exitApp(){
+    public void exitApp() {
         if (activities != null) {
             synchronized (activities) {
                 for (Activity act : activities) {

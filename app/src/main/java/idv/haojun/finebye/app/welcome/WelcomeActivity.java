@@ -15,5 +15,11 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
         setContentView(R.layout.activity_welcome);
 
         mPresenter = new WelcomePresenter(this);
+        mPresenter.displayWelcome();
+    }
+
+    @Override
+    public void openMainActivity() {
+
     }
 }
