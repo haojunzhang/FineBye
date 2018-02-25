@@ -3,6 +3,7 @@
     package="idv.haojun.finebye">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".base.App"
         android:allowBackup="true"

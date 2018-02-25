@@ -1,11 +1,13 @@
 package idv.haojun.finebye.app.welcome;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import idv.haojun.finebye.R;
+import idv.haojun.finebye.app.main.MainActivity;
 import idv.haojun.finebye.base.BaseActivity;
 
-public class WelcomeActivity extends BaseActivity implements WelcomeContract.View{
+public class WelcomeActivity extends BaseActivity implements WelcomeContract.View {
 
     private WelcomeContract.Presenter mPresenter;
 
@@ -20,6 +22,7 @@ public class WelcomeActivity extends BaseActivity implements WelcomeContract.Vie
 
     @Override
     public void openMainActivity() {
-
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
     }
 }
