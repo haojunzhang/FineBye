@@ -1,5 +1,6 @@
 package idv.haojun.finebye.app.main;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -21,12 +23,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import idv.haojun.finebye.R;
+import idv.haojun.finebye.adapter.BaseRecyclerViewAdapter;
 import idv.haojun.finebye.adapter.DrawerRVAdapter;
+import idv.haojun.finebye.app.welcome.WelcomeActivity;
 import idv.haojun.finebye.base.App;
+import idv.haojun.finebye.base.BaseActivity;
 import idv.haojun.finebye.data.DrawerItem;
 import idv.haojun.finebye.util.ImageLoader;
 
-public class MainActivity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends BaseActivity implements MainContract.View, BaseRecyclerViewAdapter.OnItemClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         DrawerRVAdapter adapter = new DrawerRVAdapter(this, R.layout.item_rv_drawer);
         adapter.setData(drawerItems);
+        adapter.setOnItemClickListener(this);
 
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -94,6 +100,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         ImageLoader.load(this, avatarUrl, iv_avatar);
     }
 
+    @Override
+    public void openWelcomeActivity() {
+        startActivity(new Intent(this, WelcomeActivity.class));
+        finish();
+    }
+
     @OnClick({R.id.iv_main_avatar, R.id.iv_main_avatar_background})
     public void onAvatarClick() {
         mPresenter.setAvatarUrlDialog();
@@ -103,9 +115,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawerLayout = findViewById(R.id.dl_main);
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            drawerLayout.closeDrawer(GravityCompat.START);
+        if (dl.isDrawerOpen(GravityCompat.START)) {
+            dl.closeDrawer(GravityCompat.START);
         } else {
             if (System.currentTimeMillis() - lastBackPressedTime > 2000) {
                 lastBackPressedTime = System.currentTimeMillis();
@@ -113,5 +124,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 App.getInstance().exitApp();
             }
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        if (dl.isDrawerOpen(GravityCompat.START)) {
+            dl.closeDrawer(GravityCompat.START);
+        }
+        mPresenter.onDrawerItemClick(((DrawerRVAdapter) rv.getAdapter()).getData().get(position));
     }
 }
