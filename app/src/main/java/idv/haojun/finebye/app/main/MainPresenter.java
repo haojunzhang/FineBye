@@ -2,6 +2,7 @@ package idv.haojun.finebye.app.main;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,6 +20,7 @@ import java.util.List;
 import idv.haojun.finebye.R;
 import idv.haojun.finebye.adapter.BaseRecyclerViewAdapter;
 import idv.haojun.finebye.adapter.ThemeColorRVAdapter;
+import idv.haojun.finebye.app.finebot.FineBotActivity;
 import idv.haojun.finebye.data.DrawerItem;
 import idv.haojun.finebye.helper.SPHelper;
 
@@ -98,6 +100,7 @@ public class MainPresenter implements MainContract.Presenter {
             case DrawerItem.WARNING_SETTING:
                 break;
             case DrawerItem.FINE_BOT:
+                context.startActivity(new Intent(context, FineBotActivity.class));
                 break;
             case DrawerItem.SEARCH:
                 break;

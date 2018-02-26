@@ -13,4 +13,19 @@
     <string name="theme">主題</string>
     <string name="confirm">確認</string>
     <string name="cancel">取消</string>
+    <string name="road">道路</string>
+    <string name="freeway">高速公路</string>
+    <string name="highway">快速道路</string>
+    <string name="normalway">一般道路</string>
+    <string name="transportation">交通工具</string>
+    <string name="moto">機車</string>
+    <string name="car">小型車(重機)</string>
+    <string name="over_speed">超速</string>
+    <string name="over_speed_0_20">0-20</string>
+    <string name="over_speed_20_40">20-40</string>
+    <string name="over_speed_40_60">40-60</string>
+    <string name="over_speed_60_80">60-80</string>
+    <string name="over_speed_80_100">80-100</string>
+    <string name="over_speed_100_up">100↑</string>
+    <string name="calculate">計算</string>
 </resources>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/road" />
+
+            <RadioGroup
+                android:id="@+id/rg_fine_bot_road_way"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_freeway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/freeway" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_highway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/highway" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_normalway"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/normalway" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/transportation" />
+
+            <RadioGroup
+                android:id="@+id/rg_fine_bot_traffic_way"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_moto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/moto" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_car"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/car" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/over_speed" />
+
+            <RadioGroup
+                android:id="@+id/rg_fine_bot_over_speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_speed_0_20"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/over_speed_0_20" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_speed_20_40"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/over_speed_20_40" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_speed_40_60"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/over_speed_40_60" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_speed_60_80"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/over_speed_60_80" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_speed_80_100"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/over_speed_80_100" />
+
+                <RadioButton
+                    android:id="@+id/rb_fine_bot_speed_100_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/over_speed_100_up" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/tv_fine_bot_fine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/calculate"
+                android:textSize="36sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
