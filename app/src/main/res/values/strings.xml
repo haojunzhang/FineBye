@@ -29,4 +29,6 @@
     <string name="over_speed_100_up">100↑</string>
     <string name="calculate">計算</string>
     <string name="title_activity_maps">Map</string>
+    <string name="shock">震動</string>
+    <string name="sound">聲音</string>
 </resources>

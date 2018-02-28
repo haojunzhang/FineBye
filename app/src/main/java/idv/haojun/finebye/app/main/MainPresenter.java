@@ -23,6 +23,7 @@ import idv.haojun.finebye.R;
 import idv.haojun.finebye.adapter.BaseRecyclerViewAdapter;
 import idv.haojun.finebye.adapter.ThemeColorRVAdapter;
 import idv.haojun.finebye.app.finebot.FineBotActivity;
+import idv.haojun.finebye.app.warningsetting.WarningSettingActivity;
 import idv.haojun.finebye.data.DrawerItem;
 import idv.haojun.finebye.helper.SPHelper;
 
@@ -102,6 +103,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                 break;
             case DrawerItem.WARNING_SETTING:
+                context.startActivity(new Intent(context, WarningSettingActivity.class));
                 break;
             case DrawerItem.FINE_BOT:
                 context.startActivity(new Intent(context, FineBotActivity.class));
