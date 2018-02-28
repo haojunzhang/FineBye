@@ -16,6 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +35,7 @@ import idv.haojun.finebye.base.BaseActivity;
 import idv.haojun.finebye.data.DrawerItem;
 import idv.haojun.finebye.util.ImageLoader;
 
-public class MainActivity extends BaseActivity implements MainContract.View, BaseRecyclerViewAdapter.OnItemClickListener {
+public class MainActivity extends BaseActivity implements MainContract.View, BaseRecyclerViewAdapter.OnItemClickListener, OnMapReadyCallback {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -60,6 +64,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
 
         mPresenter = new MainPresenter(this);
         mPresenter.getAvatar();
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_map);
+        mapFragment.getMapAsync(this);
     }
 
     private void initDrawer() {
@@ -92,6 +99,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
         rv.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         rv.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mPresenter.setGoogleMap(googleMap);
     }
 
     @Override

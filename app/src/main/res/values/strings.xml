@@ -28,4 +28,5 @@
     <string name="over_speed_80_100">80-100</string>
     <string name="over_speed_100_up">100↑</string>
     <string name="calculate">計算</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

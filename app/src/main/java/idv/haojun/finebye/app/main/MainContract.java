@@ -1,5 +1,7 @@
 package idv.haojun.finebye.app.main;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import idv.haojun.finebye.data.DrawerItem;
 
 public interface MainContract {
@@ -18,6 +20,8 @@ public interface MainContract {
         void setAvatarUrlDialog();
 
         void onDrawerItemClick(DrawerItem position);
+
+        void setGoogleMap(GoogleMap googleMap);
     }
     
 }

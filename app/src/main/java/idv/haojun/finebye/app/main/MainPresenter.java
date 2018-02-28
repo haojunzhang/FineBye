@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ import idv.haojun.finebye.helper.SPHelper;
 public class MainPresenter implements MainContract.Presenter {
     private MainContract.View mView;
     private Context context;
+    private GoogleMap mMap;
 
     MainPresenter(MainContract.View mView) {
         this.mView = mView;
@@ -96,6 +99,7 @@ public class MainPresenter implements MainContract.Presenter {
     public void onDrawerItemClick(DrawerItem drawerItem) {
         switch (drawerItem.getId()) {
             case DrawerItem.MAP:
+
                 break;
             case DrawerItem.WARNING_SETTING:
                 break;
@@ -108,5 +112,21 @@ public class MainPresenter implements MainContract.Presenter {
                 themePickDialog();
                 break;
         }
+    }
+
+    @Override
+    public void setGoogleMap(GoogleMap googleMap) {
+        this.mMap = googleMap;
+
+//        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
+        mMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+        mMap.setBuildingsEnabled(true);
+        mMap.setIndoorEnabled(true);
+
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
