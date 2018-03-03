@@ -24,8 +24,12 @@ public class BaseActivity extends AppCompatActivity {
         App.getInstance().unregisterActivity(this);
     }
 
-    protected void initTitle(int titleId){
+    protected void initTitle(int titleId) {
         initTitle(R.id.tv_toolbar_tittle, getString(titleId));
+    }
+
+    protected void initTitle(int tvId, int titleId) {
+        initTitle(tvId, getString(titleId));
     }
 
     protected void initTitle(int tvId, String title) {

@@ -65,11 +65,6 @@ public class WelcomePresenter implements WelcomeContract.Presenter {
                         GovResponse<Cam> result = response.body();
                         if (result != null && result.isSuccess() && result.getResult() != null && result.getResult().getRecords() != null)
                             camBox.put(result.getResult().getRecords());
-                        List<Cam> cams = camBox.query().build().find();
-                        Log.d("---", cams.isEmpty() ? "empty" : "have some thing");
-                        for (Cam cam : cams) {
-                            Log.d("---", cam.toString());
-                        }
                     }
                 }
 

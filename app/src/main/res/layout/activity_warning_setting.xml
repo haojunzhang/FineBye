@@ -1,10 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_warning_setting"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|enterAlways"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_warning_setting_tittle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="#FFF"
+                android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/iv_warning_setting_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_done" />
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,15 +43,18 @@
         android:padding="16dp">
 
         <TextView
+            android:id="@+id/tv_warning_setting_distance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="距離 : 1km"
+            android:text="距離 : 0.5km"
             android:textColor="#000"
             android:textSize="24sp" />
 
         <SeekBar
+            android:id="@+id/sb_warning_setting_distance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:max="9"
             android:layout_marginTop="10dp" />
 
         <RelativeLayout
@@ -66,28 +99,11 @@
                 android:textSize="24sp" />
 
             <CheckBox
+                android:id="@+id/cb_warning_setting_shock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center" />
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
-            android:background="#9E9E9E" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sound"
-            android:textColor="#000"
-            android:textSize="24sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="xxx" />
     </LinearLayout>
 </LinearLayout>

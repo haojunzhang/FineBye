@@ -12,6 +12,8 @@ public class SPHelper {
 
     public static final String AVATAR_URL = "avatar_url";
     public static final String THEME_COLOR = "theme_color";
+    public static final String DISTANCE = "distance";
+    public static final String IS_SHOCK = "is_shock";
 
     private static SharedPreferences getSP(Context context) {
         return context.getSharedPreferences(NAME, Context.MODE_PRIVATE);
@@ -31,5 +33,21 @@ public class SPHelper {
 
     public static void setThemeColor(Context context, int color) {
         getSP(context).edit().putInt(THEME_COLOR, color).apply();
+    }
+
+    public static float getDistance(Context context) {
+        return getSP(context).getFloat(DISTANCE, 0.5f);
+    }
+
+    public static void setDistance(Context context, float distance) {
+        getSP(context).edit().putFloat(DISTANCE, distance).apply();
+    }
+
+    public static boolean isShock(Context context) {
+        return getSP(context).getBoolean(IS_SHOCK, true);
+    }
+
+    public static void setShock(Context context, boolean isShock) {
+        getSP(context).edit().putBoolean(IS_SHOCK, isShock).apply();
     }
 }
