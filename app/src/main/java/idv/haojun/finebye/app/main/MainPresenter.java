@@ -1,18 +1,29 @@
 package idv.haojun.finebye.app.main;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -24,12 +35,18 @@ import idv.haojun.finebye.adapter.BaseRecyclerViewAdapter;
 import idv.haojun.finebye.adapter.ThemeColorRVAdapter;
 import idv.haojun.finebye.app.finebot.FineBotActivity;
 import idv.haojun.finebye.app.warningsetting.WarningSettingActivity;
+import idv.haojun.finebye.base.App;
+import idv.haojun.finebye.data.Cam;
 import idv.haojun.finebye.data.DrawerItem;
+import idv.haojun.finebye.helper.ColorHelper;
+import idv.haojun.finebye.helper.GoogleMapHelper;
 import idv.haojun.finebye.helper.SPHelper;
+import io.objectbox.Box;
 
 public class MainPresenter implements MainContract.Presenter {
     private MainContract.View mView;
     private Context context;
+    private LocationManager mLocationManager;
     private GoogleMap mMap;
 
     MainPresenter(MainContract.View mView) {
@@ -120,15 +137,72 @@ public class MainPresenter implements MainContract.Presenter {
     public void setGoogleMap(GoogleMap googleMap) {
         this.mMap = googleMap;
 
-//        mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setZoomControlsEnabled(true);
         mMap.getUiSettings().setCompassEnabled(true);
         mMap.getUiSettings().setIndoorLevelPickerEnabled(true);
         mMap.setBuildingsEnabled(true);
         mMap.setIndoorEnabled(true);
 
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
     }
+
+    @Override
+    public void getLastKnownLocation() {
+        if (mLocationManager == null)
+            mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+    }
+
+    private LocationListener locationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+
+                // move to current position
+                LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+                GoogleMapHelper.moveMap(mMap, current);
+
+                // draw circle
+                mMap.addCircle(new CircleOptions()
+                        .center(current)
+                        .radius(SPHelper.getDistance(context) * 1000)
+                        .strokeColor(SPHelper.getThemeColor(context))
+                        .fillColor(ColorHelper.addAlpha(SPHelper.getThemeColor(context), 0.3f))
+                );
+
+                // add speed camera marker
+                final Box<Cam> camBox = ((App) ((Activity) mView).getApplication()).getBoxStore().boxFor(Cam.class);
+                List<Cam> cams = camBox.query().build().find();
+                for (int i = 0; i < cams.size(); i++) {
+                    if (i == 0) continue;
+                    Cam cam = cams.get(i);
+                    double lat = Double.valueOf(cam.getLatitude());
+                    double lng = Double.valueOf(cam.getLongitude());
+                    mMap.addMarker(new MarkerOptions()
+                            .position(new LatLng(lat, lng))
+                            .title(cam.getAddress())
+                            .snippet(String.format("方向:%s, 速限:%s", cam.getDirect(), cam.getLimit()))
+                    );
+                }
+            }
+            mLocationManager.removeUpdates(locationListener);
+        }
+
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        public void onProviderEnabled(String provider) {
+        }
+
+        public void onProviderDisabled(String provider) {
+        }
+    };
 }

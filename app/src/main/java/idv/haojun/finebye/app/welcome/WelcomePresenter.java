@@ -65,6 +65,7 @@ public class WelcomePresenter implements WelcomeContract.Presenter {
                         GovResponse<Cam> result = response.body();
                         if (result != null && result.isSuccess() && result.getResult() != null && result.getResult().getRecords() != null)
                             camBox.put(result.getResult().getRecords());
+                        mView.openMainActivity();
                     }
                 }
 

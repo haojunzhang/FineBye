@@ -2,6 +2,7 @@ package idv.haojun.finebye.app.welcome;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 
 import idv.haojun.finebye.R;
 import idv.haojun.finebye.app.main.MainActivity;

@@ -1,8 +1,11 @@
 package idv.haojun.finebye.app.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -58,7 +62,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        initTitle(R.string.app_name);
         ButterKnife.bind(this);
         initDrawer();
 
@@ -67,6 +71,20 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_main_map);
         mapFragment.getMapAsync(this);
+
+        String[] PERMISSIONS = {
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        };
+
+        for (String permission : PERMISSIONS) {
+            if (ActivityCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS, 0);
+                return;
+            }
+        }
+
+        mPresenter.getLastKnownLocation();
     }
 
     private void initDrawer() {
@@ -144,5 +162,18 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
             dl.closeDrawer(GravityCompat.START);
         }
         mPresenter.onDrawerItemClick(((DrawerRVAdapter) rv.getAdapter()).getData().get(position));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                finish();
+                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        mPresenter.getLastKnownLocation();
     }
 }

@@ -22,6 +22,8 @@ public interface MainContract {
         void onDrawerItemClick(DrawerItem position);
 
         void setGoogleMap(GoogleMap googleMap);
+
+        void getLastKnownLocation();
     }
     
 }
