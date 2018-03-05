@@ -34,6 +34,7 @@ import idv.haojun.finebye.R;
 import idv.haojun.finebye.adapter.BaseRecyclerViewAdapter;
 import idv.haojun.finebye.adapter.ThemeColorRVAdapter;
 import idv.haojun.finebye.app.finebot.FineBotActivity;
+import idv.haojun.finebye.app.search.SearchActivity;
 import idv.haojun.finebye.app.warningsetting.WarningSettingActivity;
 import idv.haojun.finebye.base.App;
 import idv.haojun.finebye.data.Cam;
@@ -126,6 +127,7 @@ public class MainPresenter implements MainContract.Presenter {
                 context.startActivity(new Intent(context, FineBotActivity.class));
                 break;
             case DrawerItem.SEARCH:
+                context.startActivity(new Intent(context, SearchActivity.class));
                 break;
             case DrawerItem.THEME:
                 themePickDialog();
