@@ -34,3 +34,5 @@ captures/
 \.idea/
 
 *.iml
+
+google_maps_api.xml
