@@ -9,6 +9,11 @@
 * 搜尋測速機台
 * 主題切換
 
+## Screenshot
+![sc1](sc/sc1.png) ![sc2](sc/sc2.png)
+![sc3](sc/sc3.png) ![sc4](sc/sc4.png)
+![sc5](sc/sc5.png)
+
 ## Lib:
 ### Network
 * Retrofit
