@@ -12,9 +12,12 @@
 ## Screenshot
 ![sc1](sc/sc1.png) ![sc2](sc/sc2.png)
 ![sc3](sc/sc3.png) ![sc4](sc/sc4.png)
-![sc5](sc/sc5.png)
+![sc5](sc/sc5.png) ![sc6](sc/sc6.png)
+![sc7](sc/sc7.png)
 
 ## Lib:
+### UI
+* ShowcaseView
 ### Network
 * Retrofit
 * Glide
