@@ -1,5 +1,8 @@
 package idv.haojun.finebye.app.warningsetting;
 
+import android.widget.CheckBox;
+import android.widget.SeekBar;
+
 public interface WarningSettingContract {
     interface View{
         void exit();
@@ -12,5 +15,7 @@ public interface WarningSettingContract {
         void done(float km, boolean isShock);
 
         void initDefaultValue();
+
+        void showcase(SeekBar sb_distance, CheckBox cb_shock);
     }
 }

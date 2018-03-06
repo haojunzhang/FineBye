@@ -40,6 +40,7 @@ public class WarningSettingActivity extends BaseActivity implements WarningSetti
 
         mPresenter = new WarningSettingPresenter(this);
         mPresenter.initDefaultValue();
+        mPresenter.showcase(sb_distance, cb_shock);
     }
 
     @OnClick(R.id.iv_warning_setting_done)
