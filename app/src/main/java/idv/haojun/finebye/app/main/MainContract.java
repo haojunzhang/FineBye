@@ -1,16 +1,24 @@
 package idv.haojun.finebye.app.main;
 
+import android.content.Intent;
+
 import com.google.android.gms.maps.GoogleMap;
 
 import idv.haojun.finebye.data.DrawerItem;
 
 public interface MainContract {
     
+    int REQUEST_WARNING_SETTING = 0;
+    
     interface View {
 
         void displayAvatarUrl(String avatarUrl);
 
         void openWelcomeActivity();
+
+        void openWarningSettingActivity();
+
+        void exit();
     }
 
     interface Presenter {
@@ -24,6 +32,10 @@ public interface MainContract {
         void setGoogleMap(GoogleMap googleMap);
 
         void getLastKnownLocation();
+
+        void onActivityResult(int requestCode, int resultCode, Intent data);
+
+        void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
     }
     
 }

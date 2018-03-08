@@ -37,4 +37,5 @@
     <string name="warning_setting_showcase_distance_text">設定要警示的距離0.5~5公里</string>
     <string name="warning_setting_showcase_shock_title">震動設定</string>
     <string name="warning_setting_showcase_shock_text">設定當有測速照相進入設定的距離時是否要以震動提醒</string>
+    <string name="permission_denied">權限不足</string>
 </resources>

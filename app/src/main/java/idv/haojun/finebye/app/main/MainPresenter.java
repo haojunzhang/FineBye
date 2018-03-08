@@ -20,9 +20,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -49,6 +51,7 @@ public class MainPresenter implements MainContract.Presenter {
     private Context context;
     private LocationManager mLocationManager;
     private GoogleMap mMap;
+    private Circle circleCurrent;
 
     MainPresenter(MainContract.View mView) {
         this.mView = mView;
@@ -121,7 +124,7 @@ public class MainPresenter implements MainContract.Presenter {
 
                 break;
             case DrawerItem.WARNING_SETTING:
-                context.startActivity(new Intent(context, WarningSettingActivity.class));
+                mView.openWarningSettingActivity();
                 break;
             case DrawerItem.FINE_BOT:
                 context.startActivity(new Intent(context, FineBotActivity.class));
@@ -164,6 +167,27 @@ public class MainPresenter implements MainContract.Presenter {
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case MainContract.REQUEST_WARNING_SETTING:
+                getLastKnownLocation();
+                break;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        for (int result : grantResults) {
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                mView.exit();
+                Toast.makeText(context, R.string.permission_denied, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        getLastKnownLocation();
+    }
+
     private LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
             if (location != null) {
@@ -172,8 +196,14 @@ public class MainPresenter implements MainContract.Presenter {
                 LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
                 GoogleMapHelper.moveMap(mMap, current);
 
+                // clear perv circle
+                if (circleCurrent != null) {
+                    circleCurrent.remove();
+                    circleCurrent = null;
+                }
+
                 // draw circle
-                mMap.addCircle(new CircleOptions()
+                circleCurrent = mMap.addCircle(new CircleOptions()
                         .center(current)
                         .radius(SPHelper.getDistance(context) * 1000)
                         .strokeColor(SPHelper.getThemeColor(context))

@@ -30,6 +30,7 @@ import butterknife.OnClick;
 import idv.haojun.finebye.R;
 import idv.haojun.finebye.adapter.BaseRecyclerViewAdapter;
 import idv.haojun.finebye.adapter.DrawerRVAdapter;
+import idv.haojun.finebye.app.warningsetting.WarningSettingActivity;
 import idv.haojun.finebye.app.welcome.WelcomeActivity;
 import idv.haojun.finebye.base.App;
 import idv.haojun.finebye.base.BaseActivity;
@@ -133,23 +134,30 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
         finish();
     }
 
+    @Override
+    public void openWarningSettingActivity() {
+        startActivityForResult(
+                new Intent(this, WarningSettingActivity.class),
+                MainContract.REQUEST_WARNING_SETTING
+        );
+    }
+
+    @Override
+    public void exit() {
+        App.getInstance().exitApp();
+    }
+
     @OnClick({R.id.iv_main_avatar, R.id.iv_main_avatar_background})
     public void onAvatarClick() {
         mPresenter.setAvatarUrlDialog();
     }
-
-    private long lastBackPressedTime = 0;
 
     @Override
     public void onBackPressed() {
         if (dl.isDrawerOpen(GravityCompat.START)) {
             dl.closeDrawer(GravityCompat.START);
         } else {
-            if (System.currentTimeMillis() - lastBackPressedTime > 2000) {
-                lastBackPressedTime = System.currentTimeMillis();
-            } else {
-                App.getInstance().exitApp();
-            }
+            App.getInstance().exitApp();
         }
     }
 
@@ -164,13 +172,12 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int result : grantResults) {
-            if (result != PackageManager.PERMISSION_GRANTED) {
-                finish();
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-        mPresenter.getLastKnownLocation();
+        mPresenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mPresenter.onActivityResult(requestCode, resultCode, data);
     }
 }
