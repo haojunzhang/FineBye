@@ -53,6 +53,7 @@ public class WarningSettingActivity extends BaseActivity implements WarningSetti
 
     @Override
     public void exit() {
+        setResult(RESULT_OK);
         finish();
     }
 

@@ -132,7 +132,7 @@ public class MainPresenter implements MainContract.Presenter {
                 context.startActivity(new Intent(context, FineBotActivity.class));
                 break;
             case DrawerItem.SEARCH:
-                context.startActivity(new Intent(context, SearchActivity.class));
+                mView.openSearchActivity();
                 break;
             case DrawerItem.THEME:
                 themePickDialog();
@@ -174,9 +174,15 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) return;
         switch (requestCode) {
             case MainContract.REQUEST_WARNING_SETTING:
                 getLastKnownLocation();
+                break;
+            case MainContract.REQUEST_SEARCH:
+                double latitude = data.getDoubleExtra("latitude", 0.0);
+                double longitude = data.getDoubleExtra("longitude", 0.0);
+                GoogleMapHelper.moveMap(mMap, new LatLng(latitude, longitude));
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package idv.haojun.finebye.app.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,7 +65,15 @@ public class SearchActivity extends BaseActivity implements SearchContract.View,
 
     @Override
     public void onItemClick(View view, int position) {
-
+        List<Cam> cams = ((SearchRVAdapter) rv.getAdapter()).getData();
+        Cam cam = cams.get(position);
+        setResult(
+                RESULT_OK,
+                new Intent()
+                        .putExtra("latitude", Double.valueOf(cam.getLatitude()))
+                        .putExtra("longitude", Double.valueOf(cam.getLongitude()))
+        );
+        finish();
     }
 
     @Override

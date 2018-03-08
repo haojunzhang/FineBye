@@ -7,8 +7,9 @@ import com.google.android.gms.maps.GoogleMap;
 import idv.haojun.finebye.data.DrawerItem;
 
 public interface MainContract {
-    
+
     int REQUEST_WARNING_SETTING = 0;
+    int REQUEST_SEARCH = 1;
     
     interface View {
 
@@ -19,6 +20,8 @@ public interface MainContract {
         void openWarningSettingActivity();
 
         void exit();
+
+        void openSearchActivity();
     }
 
     interface Presenter {
@@ -37,5 +40,4 @@ public interface MainContract {
 
         void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
     }
-    
 }

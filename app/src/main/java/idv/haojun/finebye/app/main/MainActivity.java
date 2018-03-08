@@ -30,6 +30,7 @@ import butterknife.OnClick;
 import idv.haojun.finebye.R;
 import idv.haojun.finebye.adapter.BaseRecyclerViewAdapter;
 import idv.haojun.finebye.adapter.DrawerRVAdapter;
+import idv.haojun.finebye.app.search.SearchActivity;
 import idv.haojun.finebye.app.warningsetting.WarningSettingActivity;
 import idv.haojun.finebye.app.welcome.WelcomeActivity;
 import idv.haojun.finebye.base.App;
@@ -141,11 +142,19 @@ public class MainActivity extends BaseActivity implements MainContract.View, Bas
                 MainContract.REQUEST_WARNING_SETTING
         );
     }
+    @Override
+    public void openSearchActivity() {
+        startActivityForResult(
+                new Intent(this, SearchActivity.class),
+                MainContract.REQUEST_SEARCH
+        );
+    }
 
     @Override
     public void exit() {
         App.getInstance().exitApp();
     }
+
 
     @OnClick({R.id.iv_main_avatar, R.id.iv_main_avatar_background})
     public void onAvatarClick() {
