@@ -41,8 +41,8 @@ public class BaseActivity extends AppCompatActivity {
         int color = SPHelper.getThemeColor(this);
         if (color == ContextCompat.getColor(this, R.color.colorBluePrimary)) {
             setTheme(R.style.BlueTheme);
-        } else if (color == ContextCompat.getColor(this, R.color.colorRedPrimary)) {
-            setTheme(R.style.RedTheme);
+        } else if (color == ContextCompat.getColor(this, R.color.colorBrownPrimary)) {
+            setTheme(R.style.BrownTheme);
         } else if (color == ContextCompat.getColor(this, R.color.colorGreenPrimary)) {
             setTheme(R.style.GreenTheme);
         }

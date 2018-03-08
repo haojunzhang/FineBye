@@ -4,9 +4,9 @@
     <color name="colorBluePrimaryDark">#002171</color>
     <color name="colorBlueAccent">#0d47a1</color>
 
-    <color name="colorRedPrimary">#b71c1c</color>
-    <color name="colorRedPrimaryDark">#7f0000</color>
-    <color name="colorRedAccent">#b71c1c</color>
+    <color name="colorBrownPrimary">#795548</color>
+    <color name="colorBrownPrimaryDark">#5D4037</color>
+    <color name="colorBrownAccent">#5D4037</color>
 
     <color name="colorGreenPrimary">#33691e</color>
     <color name="colorGreenPrimaryDark">#003d00</color>

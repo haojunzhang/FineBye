@@ -7,19 +7,19 @@
     <style name="BlueTheme" parent="Base">
         <item name="colorPrimary">@color/colorBluePrimary</item>
         <item name="colorPrimaryDark">@color/colorBluePrimaryDark</item>
-        <item name="colorAccent">@color/colorBluePrimaryDark</item>
+        <item name="colorAccent">@color/colorBlueAccent</item>
     </style>
 
-    <style name="RedTheme" parent="Base">
-        <item name="colorPrimary">@color/colorRedPrimary</item>
-        <item name="colorPrimaryDark">@color/colorRedPrimaryDark</item>
-        <item name="colorAccent">@color/colorRedPrimaryDark</item>
+    <style name="BrownTheme" parent="Base">
+        <item name="colorPrimary">@color/colorBrownPrimary</item>
+        <item name="colorPrimaryDark">@color/colorBrownPrimaryDark</item>
+        <item name="colorAccent">@color/colorBrownAccent</item>
     </style>
 
     <style name="GreenTheme" parent="Base">
         <item name="colorPrimary">@color/colorGreenPrimary</item>
         <item name="colorPrimaryDark">@color/colorGreenPrimaryDark</item>
-        <item name="colorAccent">@color/colorGreenPrimaryDark</item>
+        <item name="colorAccent">@color/colorGreenAccent</item>
     </style>
 
 

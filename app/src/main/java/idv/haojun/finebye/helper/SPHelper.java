@@ -36,7 +36,7 @@ public class SPHelper {
     }
 
     public static float getDistance(Context context) {
-        return getSP(context).getFloat(DISTANCE, 0.5f);
+        return getSP(context).getFloat(DISTANCE, 500f);
     }
 
     public static void setDistance(Context context, float distance) {

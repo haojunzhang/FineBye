@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class MainPresenter implements MainContract.Presenter {
     private LocationManager mLocationManager;
     private GoogleMap mMap;
     private Circle circleCurrent;
+    private boolean finding = false;
 
     MainPresenter(MainContract.View mView) {
         this.mView = mView;
@@ -66,8 +68,8 @@ public class MainPresenter implements MainContract.Presenter {
 
         final List<Integer> colors = new ArrayList<>();
         colors.add(ContextCompat.getColor(context, R.color.colorBluePrimary));
-        colors.add(ContextCompat.getColor(context, R.color.colorRedAccent));
-        colors.add(ContextCompat.getColor(context, R.color.colorGreenAccent));
+        colors.add(ContextCompat.getColor(context, R.color.colorBrownPrimary));
+        colors.add(ContextCompat.getColor(context, R.color.colorGreenPrimary));
 
         ThemeColorRVAdapter adapter = new ThemeColorRVAdapter(context, R.layout.item_rv_theme_pick);
         rv.setLayoutManager(new GridLayoutManager(context, 3));
@@ -164,7 +166,10 @@ public class MainPresenter implements MainContract.Presenter {
                 ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        finding = true;
+        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
         mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        mLocationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
     }
 
     @Override
@@ -190,42 +195,48 @@ public class MainPresenter implements MainContract.Presenter {
 
     private LocationListener locationListener = new LocationListener() {
         public void onLocationChanged(Location location) {
-            if (location != null) {
-
-                // move to current position
-                LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
-                GoogleMapHelper.moveMap(mMap, current);
-
-                // clear perv circle
-                if (circleCurrent != null) {
-                    circleCurrent.remove();
-                    circleCurrent = null;
-                }
-
-                // draw circle
-                circleCurrent = mMap.addCircle(new CircleOptions()
-                        .center(current)
-                        .radius(SPHelper.getDistance(context) * 1000)
-                        .strokeColor(SPHelper.getThemeColor(context))
-                        .fillColor(ColorHelper.addAlpha(SPHelper.getThemeColor(context), 0.3f))
-                );
-
-                // add speed camera marker
-                final Box<Cam> camBox = ((App) ((Activity) mView).getApplication()).getBoxStore().boxFor(Cam.class);
-                List<Cam> cams = camBox.query().build().find();
-                for (int i = 0; i < cams.size(); i++) {
-                    if (i == 0) continue;
-                    Cam cam = cams.get(i);
-                    double lat = Double.valueOf(cam.getLatitude());
-                    double lng = Double.valueOf(cam.getLongitude());
-                    mMap.addMarker(new MarkerOptions()
-                            .position(new LatLng(lat, lng))
-                            .title(cam.getAddress())
-                            .snippet(String.format("方向:%s, 速限:%s", cam.getDirect(), cam.getLimit()))
-                    );
-                }
-            }
+            if (location == null) return;
+            if (!finding) return;
+            finding = false;
+            Log.d("---", location.getProvider());
             mLocationManager.removeUpdates(locationListener);
+
+            // move to current position
+            LatLng current = new LatLng(location.getLatitude(), location.getLongitude());
+            GoogleMapHelper.moveMap(mMap, current);
+
+            // add speed camera marker
+            final Box<Cam> camBox = ((App) ((Activity) mView).getApplication()).getBoxStore().boxFor(Cam.class);
+            List<Cam> cams = camBox.query().build().find();
+            for (int i = 0; i < cams.size(); i++) {
+                if (i == 0) continue;
+                Cam cam = cams.get(i);
+                double lat = Double.valueOf(cam.getLatitude());
+                double lng = Double.valueOf(cam.getLongitude());
+                mMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(lat, lng))
+                        .title(cam.getAddress())
+                        .snippet(String.format("方向:%s, 速限:%s", cam.getDirect(), cam.getLimit()))
+                );
+            }
+
+            // clear perv circle
+            if (circleCurrent != null) {
+                circleCurrent.remove();
+                circleCurrent = null;
+            }
+
+            // draw circle
+            int color = SPHelper.getThemeColor(context);
+            if (isCamAround(current, cams)) {
+                color = Color.RED;
+            }
+            circleCurrent = mMap.addCircle(new CircleOptions()
+                    .center(current)
+                    .radius(SPHelper.getDistance(context))
+                    .strokeColor(color)
+                    .fillColor(ColorHelper.addAlpha(color, 0.3f))
+            );
         }
 
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -237,4 +248,15 @@ public class MainPresenter implements MainContract.Presenter {
         public void onProviderDisabled(String provider) {
         }
     };
+
+    private boolean isCamAround(LatLng latLng, List<Cam> cams) {
+        float distance = SPHelper.getDistance(context);
+        for (int i = 0; i < cams.size(); i++) {
+            if (i == 0) continue;
+            Cam cam = cams.get(i);
+            float meter = GoogleMapHelper.distance(latLng.latitude, latLng.longitude, Double.valueOf(cam.getLatitude()), Double.valueOf(cam.getLongitude()));
+            if (meter < distance) return true;
+        }
+        return false;
+    }
 }

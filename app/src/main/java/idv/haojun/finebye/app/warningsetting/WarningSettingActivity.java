@@ -44,9 +44,9 @@ public class WarningSettingActivity extends BaseActivity implements WarningSetti
     }
 
     @OnClick(R.id.iv_warning_setting_done)
-    public void done(){
+    public void done() {
         mPresenter.done(
-                sb_distance.getProgress() * 0.5f + 0.5f,
+                (sb_distance.getProgress() + 1) * 100,
                 cb_shock.isChecked()
         );
     }
@@ -58,7 +58,7 @@ public class WarningSettingActivity extends BaseActivity implements WarningSetti
 
     @Override
     public void displayDistance(float distance) {
-        sb_distance.setProgress((int) ((distance - 0.5f) / 0.5f));
+        sb_distance.setProgress((int) ((distance / 100.0) - 1));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class WarningSettingActivity extends BaseActivity implements WarningSetti
     @SuppressLint("DefaultLocale")
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        tv_distance.setText(String.format("%s : %.1fkm",getString(R.string.distance),sb_distance.getProgress() * 0.5f + 0.5f));
+        tv_distance.setText(String.format("%s : %dm", getString(R.string.distance), (sb_distance.getProgress() + 1) * 100));
     }
 
     @Override

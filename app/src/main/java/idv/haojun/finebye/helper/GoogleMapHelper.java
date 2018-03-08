@@ -111,7 +111,11 @@ public class GoogleMapHelper {
         return poly;
     }
 
-    public static double distance(double lat1, double lng1, double lat2, double lng2) {
+    public static float distance(LatLng l1, LatLng l2) {
+        return distance(l1.latitude, l1.longitude, l2.latitude, l2.longitude);
+    }
+
+    public static float distance(double lat1, double lng1, double lat2, double lng2) {
         Location l1 = new Location("L1");
         Location l2 = new Location("L2");
         l1.setLatitude(lat1);
