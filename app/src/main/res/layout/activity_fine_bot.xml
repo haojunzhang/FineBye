@@ -31,7 +31,6 @@
                     android:id="@+id/rb_fine_bot_freeway"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:text="@string/freeway" />
 
                 <RadioButton
@@ -44,6 +43,7 @@
                     android:id="@+id/rb_fine_bot_normalway"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:checked="true"
                     android:text="@string/normalway" />
             </RadioGroup>
 
@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/calculate"
+                android:text="$ 1200"
                 android:textSize="36sp" />
         </LinearLayout>
     </ScrollView>

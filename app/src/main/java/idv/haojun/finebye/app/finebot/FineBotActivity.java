@@ -3,6 +3,8 @@ package idv.haojun.finebye.app.finebot;
 import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -22,6 +24,12 @@ public class FineBotActivity extends BaseActivity implements RadioGroup.OnChecke
 
     @BindView(R.id.rg_fine_bot_over_speed)
     RadioGroup rg_over_speed;
+
+    @BindView(R.id.rb_fine_bot_moto)
+    RadioButton rb_moto;
+
+    @BindView(R.id.rb_fine_bot_car)
+    RadioButton rb_car;
 
     @BindView(R.id.tv_fine_bot_fine)
     TextView tv_fine;
@@ -43,11 +51,13 @@ public class FineBotActivity extends BaseActivity implements RadioGroup.OnChecke
         int way = FineCalculate.FREE_WAY;
         int traffic = FineCalculate.MOTO;
         int overSpeed = FineCalculate.OVER_0_20;
+        boolean isNormalWay = false;
         switch (rg_road_way.getCheckedRadioButtonId()) {
             case R.id.rb_fine_bot_highway:
                 way = FineCalculate.HIGH_WAY;
                 break;
             case R.id.rb_fine_bot_normalway:
+                isNormalWay = true;
                 way = FineCalculate.NORMAL_WAY;
                 break;
         }
@@ -72,6 +82,12 @@ public class FineBotActivity extends BaseActivity implements RadioGroup.OnChecke
             case R.id.rb_fine_bot_speed_100_up:
                 overSpeed = FineCalculate.OVER_100_up;
                 break;
+        }
+        if (isNormalWay){
+            rb_moto.setVisibility(View.VISIBLE);
+        }else{
+            rb_moto.setVisibility(View.GONE);
+            rb_car.setChecked(true);
         }
         tv_fine.setText(String.format("$ %d", FineCalculate.calculateFine(way, traffic, overSpeed)));
     }
